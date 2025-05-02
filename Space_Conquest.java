@@ -462,7 +462,6 @@ class Battle {
         System.out.println("Now entering battle with " + name);
         World.player.resetActiveShips();
         resetEnemies();
-        printEnemiesStatus();
 
         while (friendlyTurn()) {
             if (!enemyTurn()) {
@@ -514,7 +513,9 @@ class Battle {
     boolean enemyTurn() {
         for (int i = 0; i < enemies.size(); i++) {
             Ship curShip = enemies.get(i);
-            curShip.performRandomAttack(World.player.activeShips);
+            if (!curShip.isDefeated()) {
+                curShip.performRandomAttack(World.player.activeShips);
+            }
             if (playerDefeated() || enemiesDefeated()) {
                 return false;
             }
